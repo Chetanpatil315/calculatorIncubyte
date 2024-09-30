@@ -2,6 +2,7 @@ function add(numbers) {
     if (numbers === "") {
         return 0;
     }
+
     let delimiter = /[,\n]/;
     if (numbers.startsWith("//")) {
         const delimiterEndIndex = numbers.indexOf("\n");
@@ -9,7 +10,20 @@ function add(numbers) {
         numbers = numbers.substring(delimiterEndIndex + 1);
     }
 
-    return numbers.split(delimiter).reduce((sum, num) => sum + Number(num), 0);
+    const negatives = [];
+    const sum = numbers.split(delimiter).reduce((acc, num) => {
+        const number = Number(num);
+        if (number < 0) {
+            negatives.push(number);
+        }
+        return acc + number;
+    }, 0);
+
+    if (negatives.length > 0) {
+        throw new Error(`Negative numbers not allowed: ${negatives.join(", ")}`);
+    }
+
+    return sum;
 }
 
 module.exports = add;
