@@ -10,3 +10,7 @@ test('returns the number for a single number', () => {
 test('returns the sum for two numbers', () => {
     expect(add("1,2")).toBe(3);
 });
+
+test('handles new line as a delimiter', () => {
+    expect(add("1\n2,3")).toBe(6);
+});
